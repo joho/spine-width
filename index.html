@@ -1,0 +1,84 @@
+<html>
+    <head>
+      <title>A totes legit book spine calculator</title>  
+    </head>
+    <body>
+    
+      <script type="text/javascript">
+        function calculateSpineWidth()
+        {
+          event.preventDefault();
+
+          var bindingType, numberOfPages, paperType, paperWeight;
+
+          var paperThickness, bindingThicknessOffset, spineThickness;
+
+          var form = event.target;
+
+          var paperTypeThicknesses = {
+            "Matte": 0.1,
+            "Gloss": 0.09,
+            "Woodfree": 0.11,
+            "Low Weight Coated": 0.08,
+          }
+
+          var bindingThicknessOffsets = {
+            "Paperback Book": 0,
+            "Hardback Book": 6
+          }
+          
+          bindingType = form.elements["binding-type"].value;
+          numberOfPages = form.elements["number-pages"].value;
+          paperType = form.elements["paper-type"].value;
+          paperWeight = form.elements["paper-weight"].value;
+          
+          paperThickness = paperTypeThicknesses[paperType];
+          bindingThicknessOffset = bindingThicknessOffsets[bindingType];
+
+          spineThickness = paperWeight / 100 * numberOfPages / 2 * paperThickness + bindingThicknessOffset;
+          
+          form.elements["spine-thickness"].value = spineThickness.toFixed(4);
+        }
+      </script>
+
+      <form onsubmit="calculateSpineWidth()">
+        <label for="binding-type">Binding Method</label>
+        <select name="binding-type" id="binding-type">
+          <option value="Paperback Book">Paperback Book</option>
+          <option value="Hardback Book">Hardback Book</option>
+        </select>
+
+        <label for="number-pages">Number of Pages<label>
+        <input name="number-pages" type="text" id="number-pages" value="0" />
+
+        <label for="paper-type">Paper Type</label>                   
+        <select name="paper-type" id="paper-type">
+          <option value="Matte">Matte</option>
+          <option value="Gloss">Gloss</option>
+          <option value="Woodfree">Woodfree</option>
+          <option value="Low Weight Coated">Low Weight Coated</option>
+        </select>
+
+        <label for="paper-weight">Paper Weight</label>
+        <select name="paper-weight" id="paper-weight">
+          <option value="64">64 gsm</option>
+          <option value="70">70 gsm</option>
+          <option value="80">80 gsm</option>
+          <option value="90">90 gsm</option>
+          <option value="100">100 gsm</option>
+          <option value="105">105 gsm</option>
+          <option value="128">128 gsm</option>
+          <option value="157">157 gsm</option>
+          <option value="200">200 gsm</option>
+          <option value="250">250 gsm</option>
+          <option value="300">300 gsm</option>
+        </select>
+
+        <input type="submit" name="Submit" value="Calculate" />
+
+        <label for="spine-thickness">Spine Width</label>
+        <input name="spine-thickness" type="text" id="spine-thickness" readonly="" />
+      </form>
+
+    </body>
+</html>
